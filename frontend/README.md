@@ -1,16 +1,59 @@
-# React + Vite
+# Digital Risk Protection Platform — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript frontend client for the Digital Risk Protection Platform (Kampus.VC).
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Node.js:** Node.js 20+ (verified with Node.js v25.0.0)
+- **Package Manager:** npm 10+ (verified with npm 11.6.2)
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework:** React 19 + TypeScript (Strict Type Checking)
+- **Tooling:** Vite 8
+- **Styling:** Tailwind CSS v4 (`@tailwindcss/vite`) + Design System tokens
+- **Routing:** React Router v7 (`react-router-dom`)
+- **Icons:** Lucide Icons (`lucide-react`)
+- **API Client:** Custom type-safe API client (`src/services/apiClient.ts`) with Bearer token injection
+- **State:** `AuthContext.tsx` providing user profile, active tenant workspace, and RBAC visibility
 
-## Expanding the ESLint configuration
+## Directory Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+frontend/
+├── public/                 # Static assets
+├── src/
+│   ├── components/
+│   │   ├── auth/           # ProtectedRoute higher-order guard
+│   │   ├── common/         # EmptyState, ErrorState, LoadingState primitives
+│   │   ├── layout/         # AppLayout — sidebar shell, active tenant badge, logout
+│   │   ├── shell/          # DemoBanner and other shell-level overlays
+│   │   └── ui/             # Badge, Card, CardHeader, PageHeader design primitives
+│   ├── config/             # env.ts centralized configuration
+│   ├── context/            # AuthContext.tsx — authentication & organization context
+│   ├── hooks/              # useHealthStatus — typed health status state machine
+│   ├── pages/              # StatusPage, ArchitecturePage, NotFoundPage, LoginPage, RegisterPage
+│   ├── services/           # apiClient.ts, authService.ts
+│   ├── smoke.test.mjs      # Fast verification test suite (15 assertions)
+│   ├── App.tsx             # Main router declaration with protected routes
+│   ├── main.tsx            # React application entry point
+│   ├── index.css           # Design tokens, variables & typography
+│   └── vite-env.d.ts       # Vite environment types
+├── .env.example            # Environment template
+├── tsconfig.json           # Strict TypeScript configuration
+├── vite.config.ts          # Vite configuration with Tailwind & backend proxy
+└── package.json            # Scripts and dependencies
+```
+
+## Running & Testing
+
+```bash
+# Run unit & smoke tests
+npm test
+
+# Build production bundle with TypeScript typecheck
+npm run build
+
+# Start local development server
+npm run dev
+```
